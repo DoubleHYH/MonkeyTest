@@ -545,7 +545,7 @@ class Ui_Dialog(object):
 			return __copyFile('whitelist')
 		elif tmp == -5:
 			self.runSingalMode()
-			return 'monkey -p %s'%self.changeListWidget[1]
+			return 'monkey -p %s'%self.changeListWidget[1].trimmed()
 		else:
 			self.runAllMode()
 			return 'monkey'
@@ -624,7 +624,7 @@ class Ui_Dialog(object):
 		for x in xrange(4,12):
 			tmp = eval('self.lineEdit_%s.displayText()'%x)
 			if tmp:
-				tmpStr += ' %s %s'%(listEdit[x],tmp)
+				tmpStr += ' %s %s'%(listEdit[x - 4],tmp)
 		return tmpStr
 
 	def runMonkey(self):
@@ -651,7 +651,8 @@ class Ui_Dialog(object):
 		self.pushButton.setText(u'设置事件数量')
 		runText += ' %s'%self.lineEdit.displayText()
 		self.pushButton.setText(u'设置Log存放')
-		runText += ' >/storage/sdcard0/%s.txt"'%self.comboBox.currentText()
+		runText += ' >/storage/self/primary/%s.txt"'%self.comboBox.currentText()
+		print runText
 		t = threading.Thread(target = lambda:os.system(runText))
 		t.setDaemon(True)
 		t.start()
